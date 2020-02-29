@@ -1,0 +1,67 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool issafe(int b[][10],int i,int j,int n){
+	//checking for the column.
+	for(int row=0;row<i;row++){
+		if(b[row][j]==1){
+			return false;
+		}
+	}
+	int x=i;
+	int y=j;
+	//Left diagonal.
+	while(x>=0&&y>=0){
+		if(b[x][y]==1){
+			return false;
+		}
+		x--;
+		y--;
+	}
+	x=i;
+	y=j;
+	while(x>=0&& y<n){
+		if(b[x][y]==1){
+			return false;
+		}
+		x--;
+		y++;
+	}
+	return true;
+	//if this code is executing then it means there are no elements in the left diagonal and right dialgonal and column are present you can premisely print the queen on the board
+	}
+bool solveNQueen(int b[][10],int i,int n){
+	int c=0;
+	if(i==n){
+		for(int i=0;i<n;i++){
+			for(int j=0;j<n;j++){
+				if(b[i][j]==1){
+					cout<<"Q"<<" ";
+				}
+				else{
+					cout<<"__"<<" ";
+				}
+			}
+			cout<<endl;
+		}
+		cout<<endl<<endl;
+	}
+	for(int j=0;j<n;j++){
+		if(issafe(b,i,j,n)){
+			b[i][j]=1;
+			bool nextq=solveNQueen(b,i+1,n);
+			if(nextq){
+				return true;
+			}
+			b[i][j]=0;
+			}
+		}
+		return false;
+		
+	}
+
+int main(){
+	int n;
+	cin>>n;
+	int board[10][10]={0};
+	solveNQueen(board,0,n);
+}
